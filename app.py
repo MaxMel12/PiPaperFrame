@@ -15,7 +15,8 @@ def display_image():
     epd = epd7in5_V2.EPD()
     epd.init()
     img_data = request.files['image'].read()
-    img_buffer = io.BytesIO(img_data)
+    img = Image.open(io.BytesIO(img_data).seek(0))
+    img_buffer = epd.getbuffer(img)
     epd.display(img_buffer)
 
 if __name__ == "__main__":
