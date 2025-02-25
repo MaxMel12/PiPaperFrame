@@ -16,7 +16,7 @@ def display_image():
     epd.init()
     img_data = request.files['image'].read()
     img_buffer = io.BytesIO(img_data)
-    epd.display(epd.getbuffer(img_buffer))
+    epd.display(img_buffer)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
