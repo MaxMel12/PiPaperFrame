@@ -1,6 +1,6 @@
 from waveshare import epd7in5_V2
 from PIL import Image
-from Flask import Flask, request
+from flask import Flask, request
 import io
 
 app = Flask(__name__)
