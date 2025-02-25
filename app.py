@@ -5,19 +5,20 @@ import io
 
 app = Flask(__name__)
 
+epd = epd7in5_V2.EPD()
+epd.init()
+
 @app.route("/test")
 def test():
-    epd = epd7in5_V2.EPD()
-    epd.init()
+    print("worked")
 
 @app.route("/display",methods=['POST'])
 def display_image():
-    epd = epd7in5_V2.EPD()
-    epd.init()
     img_data = request.files['image'].read()
-    img = Image.open(io.BytesIO(img_data).seek(0))
-    img_buffer = epd.getbuffer(img)
-    epd.display(img_buffer)
+    img_buffer = io.BytesIO(img_data)
+    img_buffer.seek(0)
+    img = Image.open(img_buffer)
+    epd.display(epd.getbuffer(img))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
