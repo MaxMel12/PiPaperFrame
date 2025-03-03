@@ -19,6 +19,7 @@ def display_image():
     img_buffer.seek(0)
     img = Image.open(img_buffer)
     epd.display(epd.getbuffer(img))
+    return 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
