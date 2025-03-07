@@ -64,7 +64,7 @@ def write_text():
     epd.init_part()
     epd.display_Partial(epd.getbuffer(frame[250:350,150:250],100,200,200,300))
     #epd.display(epd.getbuffer(frame))
-    return {},501
+    return {},200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
