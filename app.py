@@ -62,7 +62,7 @@ def write_text():
     draw = ImageDraw.Draw(text_im)
     draw.text((0,0),text,fill=(1),font_size=20)
     epd.init_part()
-    epd.display_Partial(epd.getbuffer(text_im,100,200,200,300))
+    epd.display_Partial(epd.getbuffer(text_im),100,200,200,300)
     #epd.display(epd.getbuffer(frame))
     return {},200
 
