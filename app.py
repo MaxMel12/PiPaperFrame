@@ -63,6 +63,7 @@ def write_text():
     draw.text((300,200),text)
     epd.init_fast()
     #epd.display_Partial(epd.getbuffer(frame))
+    epd.display(epd.getbuffer(frame))
     return {},501
 
 if __name__ == "__main__":
