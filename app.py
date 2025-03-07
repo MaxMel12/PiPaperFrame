@@ -58,11 +58,11 @@ def save_safezone():
 @app.route("/write_text",methods=['GET'])
 def write_text():
     text = request.args.get('text')
-    text_im = Image.new("1",(100,30))
+    text_im = Image.new("1",(800,480))
     draw = ImageDraw.Draw(text_im)
-    draw.text((0,0),text,fill=(1),font_size=20)
+    draw.text((300,300),text,fill=(1),font_size=20)
     epd.init_part()
-    epd.display_Partial(epd.getbuffer(text_im),100,200,200,300)
+    epd.display_Partial(epd.getbuffer(text_im),0,0,epd.width,epd.height)
     #epd.display(epd.getbuffer(frame))
     return {},200
 
