@@ -57,7 +57,7 @@ def save_safezone():
 
 @app.route("/write_text",methods=['GET'])
 def write_text():
-    font = ImageFont.load_default(40)
+    font=ImageFont.truetype("arial.ttf",40)
     text = request.args.get('text')
     text_im = Image.new("1",(800,480),0)
     draw = ImageDraw.Draw(text_im)
