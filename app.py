@@ -1,5 +1,5 @@
 from waveshare import epd7in5_V2
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from flask import Flask, request
 import io
 import utils
@@ -57,10 +57,11 @@ def save_safezone():
 
 @app.route("/write_text",methods=['GET'])
 def write_text():
+    font = ImageFont.load_default(40)
     text = request.args.get('text')
     text_im = Image.new("1",(800,480),0)
     draw = ImageDraw.Draw(text_im)
-    draw.text((100,100),text,fill=(1),font_size=40)
+    draw.text((100,100),text,fill=(1),font = font)
     epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
     #epd.display(epd.getbuffer(frame))
     return {},200
