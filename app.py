@@ -1,7 +1,8 @@
 from waveshare import epd7in5_V2
-from PIL import Image
+from PIL import Image, ImageDraw
 from flask import Flask, request
 import io
+import utils
 
 app = Flask(__name__)
 
@@ -54,6 +55,15 @@ def adjust_safezone():
 def save_safezone():
     return {}, 501
 
+@app.route("/write_text",methods=['GET'])
+def write_text():
+    text = request.args.get('text')
+    frame = utils.get_blank_frame()
+    draw = ImageDraw.Draw(frame)
+    draw.text((300,200),text)
+    epd.init_fast()
+    #epd.display_Partial(epd.getbuffer(frame))
+    return {},501
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

@@ -435,6 +435,7 @@ class EPD:
         self.ReadBusy()
 
     def sleep(self):
+        print("Display entering deep sleep")
         self.send_command(0x50)
         self.send_data(0XF7)
         
