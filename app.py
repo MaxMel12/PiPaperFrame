@@ -58,7 +58,7 @@ def save_safezone():
 @app.route("/write_text",methods=['GET'])
 def write_text():
     text = request.args.get('text')
-    text_im = Image.new((100,30))
+    text_im = Image.new("1",(100,30))
     draw = ImageDraw.Draw(text_im)
     draw.text((0,0),text,fill=(1),font_size=20)
     epd.init_part()
