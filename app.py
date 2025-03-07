@@ -60,12 +60,12 @@ def write_text():
     text = request.args.get('text')
     text_im = Image.new("1",(800,480),0)
     draw = ImageDraw.Draw(text_im)
-    draw.text((300,300),text,fill=(1),font_size=20)
-    epd.init_part()
+    draw.text((100,100),text,fill=(1),font_size=40)
     epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
     #epd.display(epd.getbuffer(frame))
     return {},200
 
 if __name__ == "__main__":
+    epd.init_part()
     app.run(host="0.0.0.0", port=8000)
 
