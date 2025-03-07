@@ -15,6 +15,7 @@ def test():
 
 @app.route("/display",methods=['POST'])
 def display_image():
+    epd.init()
     img_data = request.files['image'].read()
     img_buffer = io.BytesIO(img_data)
     img_buffer.seek(0)
