@@ -60,10 +60,10 @@ def write_text():
     text = request.args.get('text')
     frame = utils.get_blank_frame()
     draw = ImageDraw.Draw(frame)
-    draw.text((300,200),text)
-    epd.init_fast()
-    #epd.display_Partial(epd.getbuffer(frame))
-    epd.display(epd.getbuffer(frame))
+    draw.text((300,200),text,fill=(1))
+    epd.init_part()
+    epd.display_Partial(epd.getbuffer(frame[250:350,150:250],100,200,200,300))
+    #epd.display(epd.getbuffer(frame))
     return {},501
 
 if __name__ == "__main__":
