@@ -45,25 +45,29 @@ def display_image():
 def display_set_safezone():
     return {},501
 
+@app.route("/show_safezone",methods=['GET'])
+def show_safezone():
+    epd.Clear()
+    epd.init_part()
+    return {}, 200
+
 #Update safezone by either increasing/decreasing width of the box
 #Safezone 
 @app.route("/adjust_safezone",methods=['POST'])
 def adjust_safezone():
-    epd.Clear()
-    epd.init_part()
     req = request.get_json()
     xy = [(req['x0'],req['y0']),(req['x1'],req['y1'])]
     safezone_im = Image.new("1",(800,480),1)
     draw = ImageDraw.Draw(safezone_im)
     draw.rectangle(xy,width=3, outline=0)
     epd.display_Partial(epd.getbuffer(safezone_im),0,0,800,480)
-    epd.sleep()
     return {},200
 
 #If in the safezone screen, save the current one and go back to whatever was displayed before
 @app.route("/save_safezone",methods=['POST'])
 def save_safezone():
-    return {}, 501
+    epd.sleep()
+    return {},200
 
 @app.route("/write_text",methods=['GET'])
 def write_text():
