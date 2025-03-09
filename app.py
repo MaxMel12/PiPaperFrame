@@ -29,6 +29,7 @@ class Screen():
             time.sleep(1)
             current_time = now.strftime("%I:%M %p")
             if current_time != t:
+                self.epd.init_part()
                 t = current_time
                 text_im = Image.new("1",(800,480),1)
                 draw = ImageDraw.Draw(text_im)
