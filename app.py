@@ -39,9 +39,9 @@ class Screen():
                 x = (800 - text_width) // 2
                 y = (480 - text_height) // 2 - 100
                 draw.text((x,y),current_time,fill=(0),font = font)
+                text_width, text_height = draw.textsize(self.message, font=font2)
                 x = (800 - text_width) // 2
                 y = 300
-                text_width, text_height = draw.textsize(self.message, font=font2)
                 draw.text((x,y),self.message,fill=(0),font = font2)
                 if i%10 == 0:
                     self.epd.display(self.epd.getbuffer(text_im))
