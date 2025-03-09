@@ -49,7 +49,14 @@ def display_set_safezone():
 #Safezone 
 @app.route("/adjust_safezone",methods=['POST'])
 def adjust_safezone():
-    return {},501
+    req = request.get_json()
+    xy = [(req['x0'],req['y0']),(req['x1'],req['y1'])]
+    safezone_im = Image.new("0",(800,480),0)
+    draw = ImageDraw.Draw(safezone_im)
+    draw.rectangle(xy,width=3)
+    epd.display_Partial(epd.getbuffer(safezone_im),0,0,800,480)
+    epd.sleep()
+    return {},200
 
 #If in the safezone screen, save the current one and go back to whatever was displayed before
 @app.route("/save_safezone",methods=['POST'])
