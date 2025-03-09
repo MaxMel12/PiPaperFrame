@@ -55,7 +55,7 @@ def adjust_safezone():
     xy = [(req['x0'],req['y0']),(req['x1'],req['y1'])]
     safezone_im = Image.new("1",(800,480),1)
     draw = ImageDraw.Draw(safezone_im)
-    draw.rectangle(xy,width=3, color=0)
+    draw.rectangle(xy,width=3, outline=0)
     epd.display_Partial(epd.getbuffer(safezone_im),0,0,800,480)
     epd.sleep()
     return {},200
