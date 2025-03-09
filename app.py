@@ -3,6 +3,8 @@ from PIL import Image, ImageDraw, ImageFont
 from flask import Flask, request
 import io
 import utils
+import datetime
+import time
 
 app = Flask(__name__)
 
@@ -64,7 +66,7 @@ def adjust_safezone():
     return {},200
 
 #If in the safezone screen, save the current one and go back to whatever was displayed before
-@app.route("/save_safezone",methods=['POST'])
+@app.route("/save_safezone",methods=['GET'])
 def save_safezone():
     epd.sleep()
     return {},200
@@ -80,6 +82,33 @@ def write_text():
     epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
     #epd.display(epd.getbuffer(frame))
     return {},200
+
+@app.route('/show_clock')
+def show_clock():
+    width = 760-60
+    height = 460-35
+    epd.Clear()
+    epd.init_part()
+    i = 0
+    while True:
+        now = datetime.datetime.now()
+        seconds_till_next_minute = 60 - now.second
+        #time.sleep(seconds_till_next_minute)
+        time.sleep(1)
+        current_time = now.strftime("%H:%M:%S")
+        text_im = Image.new("1",(800,480),0)
+        draw = ImageDraw.Draw(text_im)
+        font=ImageFont.truetype("magicsummer.ttf",80)
+        text_width, text_height = draw.textsize(current_time, font=font)
+        x = (800 - text_width) // 2
+        y = (480 - text_height) // 2
+        draw.text((x,y),current_time,fill=(1),font = font)
+        if i%10 == 0:
+            epd.display(epd.getbuffer(text_im))
+        else:
+            epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
+        i += 1
+        
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
