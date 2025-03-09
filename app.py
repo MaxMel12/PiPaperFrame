@@ -58,7 +58,7 @@ class Screen():
         self.stop_event.set()
         self.thread.join()
 
-screen = Screen()
+screen = Screen(epd)
 
 @app.route("/test")
 def test():
