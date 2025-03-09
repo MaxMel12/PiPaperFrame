@@ -26,7 +26,7 @@ class Screen():
             now = datetime.datetime.now()
             seconds_till_next_minute = 60 - now.second
             #time.sleep(seconds_till_next_minute)
-            time.sleep(0.1)
+            time.sleep(1)
             current_time = now.strftime("%I:%M %p")
             if current_time != t:
                 t = current_time
@@ -46,7 +46,7 @@ class Screen():
                     self.epd.display(self.epd.getbuffer(text_im))
                 else:
                     self.epd.display_Partial(self.epd.getbuffer(text_im),0,0,800,480)
-                epd.sleep()
+                self.epd.sleep()
                 i += 1
 
     def set_message(self,message):
