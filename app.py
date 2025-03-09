@@ -27,7 +27,7 @@ class Screen():
             seconds_till_next_minute = 60 - now.second
             #time.sleep(seconds_till_next_minute)
             time.sleep(0.1)
-            current_time = now.strftime("%H:%M")
+            current_time = now.strftime("%I:%M:%S %p")
             if current_time != t:
                 t = current_time
                 text_im = Image.new("1",(800,480),1)
