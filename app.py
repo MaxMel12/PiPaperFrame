@@ -90,15 +90,15 @@ def show_clock():
     epd.Clear()
     epd.init_part()
     i = 0
-    time = now.strftime("%H:%M:%S")
+    t = ''
     while True:
         now = datetime.datetime.now()
         seconds_till_next_minute = 60 - now.second
         #time.sleep(seconds_till_next_minute)
         time.sleep(0.1)
         current_time = now.strftime("%H:%M:%S")
-        if current_time != time:
-            time = current_time
+        if current_time != t:
+            t = current_time
             text_im = Image.new("1",(800,480),1)
             draw = ImageDraw.Draw(text_im)
             font=ImageFont.truetype("magicsummer.otf",100)
