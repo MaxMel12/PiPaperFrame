@@ -85,6 +85,7 @@ def write_text():
 
 @app.route('/show_clock',methods=["POST"])
 def show_clock():
+    req = request.get_json()
     width = 760-60
     height = 460-35
     epd.Clear()
@@ -109,7 +110,7 @@ def show_clock():
             draw.text((x,y),current_time,fill=(0),font = font)
             x = (800 - text_width) // 2
             y = 300
-            draw.text((x,y),current_time,fill=(0),font = font)
+            draw.text((x,y),req['message'],fill=(0),font = font)
             if i%10 == 0:
                 epd.display(epd.getbuffer(text_im))
             else:
