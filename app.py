@@ -95,14 +95,14 @@ def show_clock():
     while True:
         now = datetime.datetime.now()
         seconds_till_next_minute = 60 - now.second
-        #time.sleep(seconds_till_next_minute)
-        time.sleep(0.1)
-        current_time = now.strftime("%H:%M:%S")
+        time.sleep(seconds_till_next_minute)
+        #time.sleep(1)
+        current_time = now.strftime("%H:%M")
         if current_time != t:
             t = current_time
             text_im = Image.new("1",(800,480),1)
             draw = ImageDraw.Draw(text_im)
-            font=ImageFont.truetype("magicsummer.otf",100)
+            font=ImageFont.truetype("magicsummer.otf",20)
             font=ImageFont.truetype("arial.ttf",40)
             text_width, text_height = draw.textsize(current_time, font=font)
             x = (800 - text_width) // 2
