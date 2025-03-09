@@ -5,11 +5,60 @@ import io
 import utils
 import datetime
 import time
+import threading
 
 app = Flask(__name__)
 
 epd = epd7in5_V2.EPD()
 epd.init()
+
+class Screen():
+    def __init__(self,epd):
+        self.thread = threading.Thread(target=self.run_clock)
+        self.message = ''
+        self.epd = epd
+    
+    def run_clock(self):
+        i = 0
+        t = ''
+        while not self.stop_event.is_set():
+            now = datetime.datetime.now()
+            seconds_till_next_minute = 60 - now.second
+            #time.sleep(seconds_till_next_minute)
+            time.sleep(0.1)
+            current_time = now.strftime("%H:%M")
+            if current_time != t:
+                t = current_time
+                text_im = Image.new("1",(800,480),1)
+                draw = ImageDraw.Draw(text_im)
+                font=ImageFont.truetype("./magicsummer.otf",20)
+                font=ImageFont.truetype("./arial.ttf",40)
+                text_width, text_height = draw.textsize(current_time, font=font)
+                x = (800 - text_width) // 2
+                y = (480 - text_height) // 2
+                draw.text((x,y),current_time,fill=(0),font = font)
+                x = (800 - text_width) // 2
+                y = 300
+                draw.text((x,y),self.message,fill=(0),font = font)
+                if i%10 == 0:
+                    self.epd.display(self.epd.getbuffer(text_im))
+                else:
+                    self.epd.display_Partial(self.epd.getbuffer(text_im),0,0,800,480)
+                i += 1
+
+    def set_message(self,message):
+        self.message = message
+    
+    def start_clock(self):
+        self.epd.Clear()
+        self.epd.init_part()
+        self.thread.start()
+    
+    def stop_clock(self):
+        self.stop_event.set()
+        self.thread.join()
+
+screen = Screen()
 
 @app.route("/test")
 def test():
@@ -89,33 +138,19 @@ def show_clock():
     width = 760-60
     height = 460-35
     epd.Clear()
-    epd.init_part()
-    i = 0
-    t = ''
-    while True:
-        now = datetime.datetime.now()
-        seconds_till_next_minute = 60 - now.second
-        time.sleep(seconds_till_next_minute)
-        #time.sleep(1)
-        current_time = now.strftime("%H:%M")
-        if current_time != t:
-            t = current_time
-            text_im = Image.new("1",(800,480),1)
-            draw = ImageDraw.Draw(text_im)
-            font=ImageFont.truetype("magicsummer.otf",20)
-            font=ImageFont.truetype("arial.ttf",40)
-            text_width, text_height = draw.textsize(current_time, font=font)
-            x = (800 - text_width) // 2
-            y = (480 - text_height) // 2
-            draw.text((x,y),current_time,fill=(0),font = font)
-            x = (800 - text_width) // 2
-            y = 300
-            draw.text((x,y),req['message'],fill=(0),font = font)
-            if i%10 == 0:
-                epd.display(epd.getbuffer(text_im))
-            else:
-                epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
-            i += 1
+    screen.start_clock()
+    return {},200
+
+@app.route('/stop_clock',methods=["POST"])
+def stop_clock():
+    screen.stop_clock()
+    return {},200
+
+@app.route('/set_message',methods=["POST"])
+def set_message():
+    req = request.get_json()
+    screen.set_message(req['message'])
+    return {},200
         
 
 if __name__ == "__main__":
