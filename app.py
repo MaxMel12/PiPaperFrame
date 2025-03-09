@@ -103,7 +103,7 @@ def show_clock():
             draw = ImageDraw.Draw(text_im)
             font=ImageFont.truetype("magicsummer.otf",100)
             font=ImageFont.truetype("arial.ttf",40)
-            text_width, text_height = draw.textbbox(current_time, font=font)
+            text_width, text_height = draw.textsize(current_time, font=font)
             x = (800 - text_width) // 2
             y = (480 - text_height) // 2
             draw.text((x,y),current_time,fill=(0),font = font)
