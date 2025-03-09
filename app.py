@@ -49,6 +49,8 @@ def display_set_safezone():
 #Safezone 
 @app.route("/adjust_safezone",methods=['POST'])
 def adjust_safezone():
+    epd.Clear()
+    epd.init_part()
     req = request.get_json()
     xy = [(req['x0'],req['y0']),(req['x1'],req['y1'])]
     safezone_im = Image.new("1",(800,480),0)
@@ -65,6 +67,7 @@ def save_safezone():
 
 @app.route("/write_text",methods=['GET'])
 def write_text():
+    epd.init_part()
     font=ImageFont.truetype("arial.ttf",40)
     text = request.args.get('text')
     text_im = Image.new("1",(800,480),0)
@@ -75,6 +78,5 @@ def write_text():
     return {},200
 
 if __name__ == "__main__":
-    epd.init_part()
     app.run(host="0.0.0.0", port=8000)
 
