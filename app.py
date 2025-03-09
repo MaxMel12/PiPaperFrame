@@ -27,7 +27,7 @@ class Screen():
             seconds_till_next_minute = 60 - now.second
             #time.sleep(seconds_till_next_minute)
             time.sleep(0.1)
-            current_time = now.strftime("%I:%M:%S %p")
+            current_time = now.strftime("%I:%M %p")
             if current_time != t:
                 t = current_time
                 text_im = Image.new("1",(800,480),1)
@@ -36,7 +36,7 @@ class Screen():
                 font2=ImageFont.truetype("./arial.ttf",50)
                 text_width, text_height = draw.textsize(current_time, font=font)
                 x = (800 - text_width) // 2
-                y = (480 - text_height) // 2 + 100
+                y = (480 - text_height) // 2 - 100
                 draw.text((x,y),current_time,fill=(0),font = font)
                 x = (800 - text_width) // 2
                 y = 300
@@ -46,7 +46,7 @@ class Screen():
                     self.epd.display(self.epd.getbuffer(text_im))
                 else:
                     self.epd.display_Partial(self.epd.getbuffer(text_im),0,0,800,480)
-                #epd.sleep()
+                epd.sleep()
                 i += 1
 
     def set_message(self,message):
