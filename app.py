@@ -83,7 +83,7 @@ def write_text():
     #epd.display(epd.getbuffer(frame))
     return {},200
 
-@app.route('/show_clock')
+@app.route('/show_clock',methods=["POST"])
 def show_clock():
     width = 760-60
     height = 460-35
@@ -98,10 +98,14 @@ def show_clock():
         current_time = now.strftime("%H:%M:%S")
         text_im = Image.new("1",(800,480),0)
         draw = ImageDraw.Draw(text_im)
-        font=ImageFont.truetype("magicsummer.ttf",80)
+        font=ImageFont.truetype("magicsummer.otf",80)
+        font=ImageFont.truetype("arial.ttf",40)
         text_width, text_height = draw.textsize(current_time, font=font)
         x = (800 - text_width) // 2
         y = (480 - text_height) // 2
+        draw.text((x,y),current_time,fill=(1),font = font)
+        x = (800 - text_width) // 2
+        y = 300
         draw.text((x,y),current_time,fill=(1),font = font)
         if i%10 == 0:
             epd.display(epd.getbuffer(text_im))
