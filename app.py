@@ -90,28 +90,31 @@ def show_clock():
     epd.Clear()
     epd.init_part()
     i = 0
+    time = now.strftime("%H:%M:%S")
     while True:
         now = datetime.datetime.now()
         seconds_till_next_minute = 60 - now.second
         #time.sleep(seconds_till_next_minute)
-        time.sleep(1)
+        time.sleep(0.1)
         current_time = now.strftime("%H:%M:%S")
-        text_im = Image.new("1",(800,480),0)
-        draw = ImageDraw.Draw(text_im)
-        font=ImageFont.truetype("magicsummer.otf",80)
-        font=ImageFont.truetype("arial.ttf",40)
-        text_width, text_height = draw.textsize(current_time, font=font)
-        x = (800 - text_width) // 2
-        y = (480 - text_height) // 2
-        draw.text((x,y),current_time,fill=(1),font = font)
-        x = (800 - text_width) // 2
-        y = 300
-        draw.text((x,y),current_time,fill=(1),font = font)
-        if i%10 == 0:
-            epd.display(epd.getbuffer(text_im))
-        else:
-            epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
-        i += 1
+        if current_time != time:
+            time = current_time
+            text_im = Image.new("1",(800,480),1)
+            draw = ImageDraw.Draw(text_im)
+            font=ImageFont.truetype("magicsummer.otf",100)
+            font=ImageFont.truetype("arial.ttf",40)
+            text_width, text_height = draw.textbbox(current_time, font=font)
+            x = (800 - text_width) // 2
+            y = (480 - text_height) // 2
+            draw.text((x,y),current_time,fill=(0),font = font)
+            x = (800 - text_width) // 2
+            y = 300
+            draw.text((x,y),current_time,fill=(0),font = font)
+            if i%10 == 0:
+                epd.display(epd.getbuffer(text_im))
+            else:
+                epd.display_Partial(epd.getbuffer(text_im),0,0,800,480)
+            i += 1
         
 
 if __name__ == "__main__":
