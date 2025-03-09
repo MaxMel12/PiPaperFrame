@@ -17,6 +17,7 @@ class Screen():
         self.thread = threading.Thread(target=self.run_clock)
         self.message = ''
         self.epd = epd
+        self.stop_event = threading.Event()
     
     def run_clock(self):
         i = 0
