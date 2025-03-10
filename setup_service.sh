@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define paths
-APP_PATH="/PiPaperFrame/app.py"
-VENV_PATH="/PiPaperFrame/venv"
+APP_PATH="/home/max/PiPaperFrame/app.py"
+VENV_PATH="home/max/PiPaperFrame/venv"
 SERVICE_PATH="/etc/systemd/system/myapp.service"
 
 # Create systemd service file
