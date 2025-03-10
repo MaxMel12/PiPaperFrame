@@ -17,7 +17,13 @@
 
     <script>
         function showClock() {
-            fetch('http://10.0.0.214:8000/show_clock',{method:'POST',body:{}})
+            fetch('http://10.0.0.214:8000/show_clock',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {}
+            })
             .catch(error => {
                 console.error('Error:', error);
             });
