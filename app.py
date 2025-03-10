@@ -67,7 +67,7 @@ class Screen():
 
 screen = Screen(epd)
 
-@app.route('/')
+@app.route('/dash')
 def home():
     return render_template('index.html')
 
