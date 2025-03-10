@@ -59,6 +59,9 @@ class Screen():
     def start_clock(self):
         self.epd.Clear()
         self.epd.init_part()
+        if self.thread.is_alive():
+            self.stop_event.set()
+            self.thread.join()
         self.thread.start()
     
     def stop_clock(self):
