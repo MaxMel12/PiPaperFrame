@@ -15,7 +15,7 @@ After=network.target
 [Service]
 Type=simple
 User=max
-ExecStart=$VENV_PATH/bin/python $APP_PATH
+ExecStart=$VENV_PATH/bin/python3 $APP_PATH
 
 [Install]
 WantedBy=multi-user.target
