@@ -33,7 +33,7 @@ class Screen():
                 t = current_time
                 text_im = Image.new("1",(800,480),1)
                 draw = ImageDraw.Draw(text_im)
-                font=ImageFont.truetype("./magicsummer.otf",200)
+                font=ImageFont.truetype("./magicsummer.otf",250)
                 font2=ImageFont.truetype("./arial.ttf",50)
                 text_width, text_height = draw.textsize(current_time, font=font)
                 x = (800 - text_width) // 2

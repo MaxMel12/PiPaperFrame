@@ -14,7 +14,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=max
+User=root
 ExecStart=$VENV_PATH/bin/python3 $APP_PATH
 
 [Install]
