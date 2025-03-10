@@ -12,6 +12,9 @@ app = Flask(__name__)
 epd = epd7in5_V2.EPD()
 epd.init()
 
+ARIAL_PATH = '/home/max/PiPaperFrame/arial.ttf'
+MAGICSUMMER_PATH = '/home/max/PiPaperFrame/magicsummer.otf'
+
 class Screen():
     def __init__(self,epd):
         self.thread = threading.Thread(target=self.run_clock)
@@ -33,8 +36,8 @@ class Screen():
                 t = current_time
                 text_im = Image.new("1",(800,480),1)
                 draw = ImageDraw.Draw(text_im)
-                font=ImageFont.truetype("./magicsummer.otf",250)
-                font2=ImageFont.truetype("./arial.ttf",50)
+                font=ImageFont.truetype(ARIAL_PATH,250)
+                font2=ImageFont.truetype(MAGICSUMMER_PATH,50)
                 text_width, text_height = draw.textsize(current_time, font=font)
                 x = (800 - text_width) // 2
                 y = (480 - text_height) // 2 - 100
