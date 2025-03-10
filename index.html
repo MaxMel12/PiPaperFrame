@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Panel</title>
+</head>
+<body>
+    <h1>Control Panel</h1>
+
+    <form id="messageForm" action="http://10.0.0.214:8000/set_message" method="POST">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Send Message</button>
+    </form>
+
+    <button onclick="showClock()">Show Clock</button>
+
+    <script>
+        function showClock() {
+            fetch('http://10.0.0.214:8000/show_clock')
+            .then(response => response.text()) 
+            .then(data => {
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault()
+            const messageValue = document.getElementById('message').value;
+            const data = JSON.stringify({ message: messageValue });
+            fetch('http://10.0.0.214:8000/set_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
