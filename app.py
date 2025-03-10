@@ -1,6 +1,6 @@
 from waveshare import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
-from flask import Flask, request, render_template
+from flask import Flask, request, send_from_directory
 import io
 import utils
 import datetime
@@ -67,9 +67,9 @@ class Screen():
 
 screen = Screen(epd)
 
-@app.route('/dash')
+@app.route('/')
 def home():
-    return render_template('/home/max/PiPaperFrame/index.html')
+    return send_from_directory('/home/max/PiPaperFrame', 'index.html')
 
 @app.route("/display",methods=['POST'])
 def display_image():
