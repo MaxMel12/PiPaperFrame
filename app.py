@@ -69,7 +69,7 @@ screen = Screen(epd)
 
 @app.route('/dash')
 def home():
-    return render_template('index.html')
+    return render_template('/home/max/PiPaperFrame/index.html')
 
 @app.route("/display",methods=['POST'])
 def display_image():
